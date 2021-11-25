@@ -2,7 +2,6 @@ package com.geekbrains.popularlib
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import com.geekbrains.popularlib.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -17,20 +16,20 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val listener = View.OnClickListener { view ->
-            presenter.counterClick(view.id)
-        }
-
-        binding.btnCounter1.setOnClickListener(listener)
-        binding.btnCounter2.setOnClickListener(listener)
-        binding.btnCounter3.setOnClickListener(listener)
+        binding.btnCounter1.setOnClickListener {presenter.counterClick1()}
+        binding.btnCounter2.setOnClickListener {presenter.counterClick2()}
+        binding.btnCounter3.setOnClickListener {presenter.counterClick3()}
     }
 
-    override fun setButtonText(index: Int, text: String) = when (index) {
-        0 -> binding.btnCounter1.text = text
-        1 -> binding.btnCounter2.text = text
-        2 -> binding.btnCounter3.text = text
-        else -> error("Неверный индекс")
+    override fun setButtonText1(text: String) {
+       binding.btnCounter1.text = text
+    }
+
+    override fun setButtonText2(text: String) {
+        binding.btnCounter2.text = text
+    }
+
+    override fun setButtonText3(text: String) {
+        binding.btnCounter3.text = text
     }
 }
