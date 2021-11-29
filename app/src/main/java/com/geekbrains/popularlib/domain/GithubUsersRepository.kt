@@ -2,7 +2,7 @@ package com.geekbrains.popularlib.domain
 
 import com.geekbrains.popularlib.model.GithubUserModel
 
-class GithubUserRepository {
+class GithubUsersRepository {
 
     private val users = listOf(
         GithubUserModel("user1"),
