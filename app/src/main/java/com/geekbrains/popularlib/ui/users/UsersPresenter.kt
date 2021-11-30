@@ -3,10 +3,12 @@ package com.geekbrains.popularlib.ui.users
 import com.geekbrains.popularlib.domain.GithubUsersRepository
 import com.geekbrains.popularlib.model.GithubUserModel
 import com.geekbrains.popularlib.ui.base.IListPresenter
+import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 
 class UsersPresenter(
-    private val usersRepository: GithubUsersRepository
+    private val router: Router,
+    private val usersRepository: GithubUsersRepository,
 ) : MvpPresenter<UsersView>() {
 
     val usersListPresenter = UsersListPresenter()
@@ -34,5 +36,10 @@ class UsersPresenter(
         }
 
         override fun getCount() = users.size
+    }
+
+    fun backPressed(): Boolean {
+        router.exit()
+        return true
     }
 }

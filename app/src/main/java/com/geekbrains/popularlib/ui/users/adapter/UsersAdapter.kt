@@ -46,14 +46,3 @@ class UsersAdapter(
        return presenter.getCount()
     }
 }
-
-object UsersItemCallback : DiffUtil.ItemCallback<GithubUserModel>() {
-    override fun areItemsTheSame(oldItem: GithubUserModel, newItem: GithubUserModel): Boolean {
-        return oldItem.login == newItem.login
-    }
-
-    override fun areContentsTheSame(oldItem: GithubUserModel, newItem: GithubUserModel): Boolean {
-        return oldItem.login == newItem.login
-    }
-
-}
