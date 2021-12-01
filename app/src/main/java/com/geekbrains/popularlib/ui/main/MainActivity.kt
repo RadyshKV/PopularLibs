@@ -9,7 +9,8 @@ import moxy.ktx.moxyPresenter
 
 class MainActivity: MvpAppCompatActivity(R.layout.activity_main), MainView {
 
-    val navigator = AppNavigator(this, R.id.container)
+
+    private val navigator = AppNavigator(this, R.id.container)
     private val presenter by moxyPresenter { MainPresenter(App.instance.router) }
 
     override fun onResumeFragments() {
@@ -26,6 +27,7 @@ class MainActivity: MvpAppCompatActivity(R.layout.activity_main), MainView {
         super.onBackPressed()
         supportFragmentManager.fragments.forEach{
             if (it is BackButtonListener && it.backPressed()){
+                println(it.nomer)
                 return
             }
         }

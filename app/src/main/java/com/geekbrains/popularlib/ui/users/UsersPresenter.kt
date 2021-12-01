@@ -18,7 +18,7 @@ class UsersPresenter(
         super.onFirstViewAttach()
         loadData()
         usersListPresenter.itemClickListener = {
-            router.navigateTo(AppScreens.userInfoScreen(it.pos))
+            router.navigateTo(AppScreens.userInfoScreen(usersRepository.getUsers().get(it.pos).login))
         }
     }
 
