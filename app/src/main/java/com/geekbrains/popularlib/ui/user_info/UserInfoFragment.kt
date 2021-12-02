@@ -10,9 +10,9 @@ import com.geekbrains.popularlib.ui.base.BackButtonListener
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UserInfoFragment(): MvpAppCompatFragment(), UserInfoView, BackButtonListener {
+class UserInfoFragment() : MvpAppCompatFragment(), UserInfoView, BackButtonListener {
 
-    private val presenter by moxyPresenter { UserInfoPresenter(App.instance.router, ) }
+    private val presenter by moxyPresenter { UserInfoPresenter(App.instance.router) }
     private var _binding: FragmentUserInfoBinding? = null
     private val binding
         get() = _binding!!
@@ -35,9 +35,6 @@ class UserInfoFragment(): MvpAppCompatFragment(), UserInfoView, BackButtonListen
     }
 
     override fun backPressed() = presenter.backPressed()
-    override var nomer: Int = 222
-
-
 
     override fun setLogin(login: String) {
         binding.tvLogin.text = login
