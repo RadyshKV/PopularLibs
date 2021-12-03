@@ -5,6 +5,7 @@ import com.geekbrains.popularlib.model.GithubUserModel
 import com.geekbrains.popularlib.screens.AppScreens
 import com.geekbrains.popularlib.ui.base.IListPresenter
 import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 
 class UsersPresenter(
@@ -18,14 +19,22 @@ class UsersPresenter(
         super.onFirstViewAttach()
         loadData()
         usersListPresenter.itemClickListener = {
-            router.navigateTo(AppScreens.userInfoScreen(usersRepository.getUsers().get(it.pos).login))
+            router.navigateTo(
+                AppScreens.userInfoScreen(
+                    usersListPresenter.users.get(it.pos).login
+                )
+            )
         }
     }
 
     private fun loadData() {
-        val users = usersRepository.getUsers()
-        usersListPresenter.users.addAll(users)
-        viewState.updateList()
+
+        usersRepository.getUsersZip()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe() {
+                usersListPresenter.users.add(it)
+                viewState.updateList()
+            }
     }
 
     class UsersListPresenter : IListPresenter<UserItemView> {
