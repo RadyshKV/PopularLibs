@@ -1,6 +1,11 @@
 package com.geekbrains.popularlib.model
 
-data class GithubUserModel(
-    val login: String
-)
+import com.google.gson.annotations.Expose
 
+data class GithubUserModel(
+    @Expose
+    val login: String,
+
+    @Expose
+    val avatarUrl: String,
+)

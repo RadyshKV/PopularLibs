@@ -7,4 +7,10 @@ interface UsersView: MvpView {
     @AddToEndSingle
     fun updateList()
 
+    @AddToEndSingle
+    fun showLoading()
+
+    @AddToEndSingle
+    fun hideLoading()
+
 }

@@ -2,23 +2,26 @@ package com.geekbrains.popularlib.ui.users.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.popularlib.databinding.ItemUserBinding
-import com.geekbrains.popularlib.model.GithubUserModel
-import com.geekbrains.popularlib.ui.base.IListPresenter
+import com.geekbrains.popularlib.ui.imageloading.ImageLoader
 import com.geekbrains.popularlib.ui.users.UserItemView
 import com.geekbrains.popularlib.ui.users.UsersPresenter
 
 class UsersAdapter(
-    private val presenter: UsersPresenter.UsersListPresenter
+    private val presenter: UsersPresenter.UsersListPresenter,
+    private val imageLoader: ImageLoader<ImageView>
 ) : RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
 
     inner class UserViewHolder(private val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
         UserItemView {
         override fun setLogin(login: String) {
             vb.tvLogin.text = login
+        }
+
+        override fun loadImage(imageUrl: String) {
+            imageLoader.loadInto(imageUrl, vb.userImage)
         }
 
         override var pos: Int = -1
@@ -43,6 +46,6 @@ class UsersAdapter(
     }
 
     override fun getItemCount(): Int {
-       return presenter.getCount()
+        return presenter.getCount()
     }
 }
