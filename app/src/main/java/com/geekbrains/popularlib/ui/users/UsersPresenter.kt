@@ -2,6 +2,7 @@ package com.geekbrains.popularlib.ui.users
 
 import com.geekbrains.popularlib.domain.GithubUsersRepository
 import com.geekbrains.popularlib.model.GithubUserModel
+import com.geekbrains.popularlib.screens.AppScreens
 import com.geekbrains.popularlib.ui.base.IListPresenter
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
@@ -16,7 +17,9 @@ class UsersPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadData()
-        usersListPresenter.itemClickListener = {} // todo
+        usersListPresenter.itemClickListener = {
+            router.navigateTo(AppScreens.userInfoScreen(usersRepository.getUsers().get(it.pos).login))
+        }
     }
 
     private fun loadData() {
@@ -39,7 +42,7 @@ class UsersPresenter(
     }
 
     fun backPressed(): Boolean {
-        router.exit()
+        //router.exit()
         return true
     }
 }

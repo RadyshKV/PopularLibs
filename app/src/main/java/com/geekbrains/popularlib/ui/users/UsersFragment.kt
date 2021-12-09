@@ -16,7 +16,12 @@ import moxy.ktx.moxyPresenter
 
 class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
-    private val presenter by moxyPresenter { UsersPresenter(App.instance.router, GithubUsersRepository()) }
+    private val presenter by moxyPresenter {
+        UsersPresenter(
+            App.instance.router,
+            GithubUsersRepository()
+        )
+    }
     private var _binding: FragmentUsersBinding? = null
     private val binding
         get() = _binding!!
@@ -46,8 +51,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         adapter.notifyDataSetChanged()
     }
 
-    override fun backPressed(): Boolean {
-        presenter.backPressed()
-        return true
-    }
+    override fun backPressed() = presenter.backPressed()
+
+
 }

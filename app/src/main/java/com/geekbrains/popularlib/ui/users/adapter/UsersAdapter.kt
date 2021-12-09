@@ -32,7 +32,7 @@ class UsersAdapter(
                 false
             )
         ).apply {
-            itemView.setOnClickListener { presenter.itemClickListener }
+            itemView.setOnClickListener { presenter.itemClickListener?.invoke(this) }
         }
     }
 
