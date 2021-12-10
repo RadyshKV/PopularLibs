@@ -22,8 +22,8 @@ class UsersPresenter(
         loadData()
         usersListPresenter.itemClickListener = {
             router.navigateTo(
-                AppScreens.userInfoScreen(
-                    usersListPresenter.users.get(it.pos).login
+                AppScreens.reposScreen(
+                    usersListPresenter.users.get(it.pos).reposUrl
                 )
             )
         }
