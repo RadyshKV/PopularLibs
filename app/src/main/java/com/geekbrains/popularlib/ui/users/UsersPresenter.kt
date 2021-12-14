@@ -3,7 +3,7 @@ package com.geekbrains.popularlib.ui.users
 import android.util.Log
 import com.geekbrains.popularlib.domain.GithubUsersRepository
 import com.geekbrains.popularlib.model.GithubUserModel
-import com.geekbrains.popularlib.screens.AppScreens
+import com.geekbrains.popularlib.navigation.AppScreens
 import com.geekbrains.popularlib.ui.base.IListPresenter
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -23,7 +23,7 @@ class UsersPresenter(
         usersListPresenter.itemClickListener = {
             router.navigateTo(
                 AppScreens.reposScreen(
-                    usersListPresenter.users.get(it.pos).reposUrl
+                   usersListPresenter.users.get(it.pos)
                 )
             )
         }
@@ -62,7 +62,7 @@ class UsersPresenter(
     }
 
     fun backPressed(): Boolean {
-        //router.exit()
+        router.exit()
         return true
     }
 }

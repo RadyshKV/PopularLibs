@@ -1,6 +1,7 @@
-package com.geekbrains.popularlib.screens
+package com.geekbrains.popularlib.navigation
 
 import androidx.core.os.bundleOf
+import com.geekbrains.popularlib.model.GithubUserModel
 import com.geekbrains.popularlib.ui.repo_info.RepoInfoFragment
 import com.geekbrains.popularlib.ui.repos.ReposFragment
 import com.geekbrains.popularlib.ui.users.UsersFragment
@@ -11,16 +12,11 @@ object AppScreens {
         UsersFragment()
     }
 
-    fun reposScreen(reposUrl: String) = FragmentScreen {
-        ReposFragment().apply {
-            arguments = bundleOf("reposUrl" to reposUrl)
-        }
+    fun reposScreen(userModel: GithubUserModel) = FragmentScreen {
+        ReposFragment.newInstance(userModel)
     }
 
     fun repoInfoScreen(repoName: String, repoForks: Int) = FragmentScreen {
-        RepoInfoFragment().apply {
-            arguments = bundleOf("repoName" to repoName, "repoForks" to repoForks)
-
-        }
+        RepoInfoFragment.newInstance(repoName, repoForks)
     }
 }

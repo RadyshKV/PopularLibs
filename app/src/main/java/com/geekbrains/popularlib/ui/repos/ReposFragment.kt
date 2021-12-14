@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.popularlib.App
 import com.geekbrains.popularlib.databinding.FragmentReposBinding
+import com.geekbrains.popularlib.db.AppDatabase
 import com.geekbrains.popularlib.domain.GithubReposRepositoryImpl
+import com.geekbrains.popularlib.model.GithubUserModel
 import com.geekbrains.popularlib.remote.ApiHolder
+import com.geekbrains.popularlib.remote.connectivity.NetworkStatus
 import com.geekbrains.popularlib.ui.base.BackButtonListener
 import com.geekbrains.popularlib.ui.repos.adapter.ReposAdapter
 import moxy.MvpAppCompatFragment
@@ -17,10 +21,17 @@ import moxy.ktx.moxyPresenter
 
 class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
 
+    private val status by lazy { NetworkStatus(requireContext().applicationContext) }
+
     private val presenter by moxyPresenter {
         ReposPresenter(
+            userModel,
             App.instance.router,
-            GithubReposRepositoryImpl(ApiHolder.retrofitService)
+            GithubReposRepositoryImpl(
+                status,
+                ApiHolder.retrofitService,
+                AppDatabase.instance
+            )
         )
     }
     private var _binding: FragmentReposBinding? = null
@@ -31,6 +42,10 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
         ReposAdapter(
             presenter.reposListPresenter
         )
+    }
+
+    private val userModel: GithubUserModel by lazy {
+        requireArguments().getSerializable(KEY_USER_MODEL) as GithubUserModel
     }
 
     override fun onCreateView(
@@ -44,7 +59,6 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getArguments(arguments)
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
     }
@@ -65,5 +79,13 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
 
     override fun backPressed() = presenter.backPressed()
 
+    companion object{
+        private const val KEY_USER_MODEL = "KEY_USER_MODEL"
+        fun newInstance(userModel: GithubUserModel): ReposFragment {
+            return ReposFragment().apply {
+                arguments = bundleOf(KEY_USER_MODEL to userModel)
+            }
+        }
+    }
 
 }

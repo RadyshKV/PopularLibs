@@ -1,8 +1,12 @@
 package com.geekbrains.popularlib.model
 
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 data class GithubUserModel(
+    @Expose
+    val id: String,
+
     @Expose
     val login: String,
 
@@ -11,5 +15,4 @@ data class GithubUserModel(
 
     @Expose
     val reposUrl: String,
-
-)
+) : Serializable

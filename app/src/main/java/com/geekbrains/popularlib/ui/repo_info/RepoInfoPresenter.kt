@@ -1,16 +1,16 @@
 package com.geekbrains.popularlib.ui.repo_info
 
 
-import android.os.Bundle
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 
 class RepoInfoPresenter(
+    private val repoName: String?,
+    private val repoForks: Int,
     private val router: Router,
 ) : MvpPresenter<RepoInfoView>() {
 
-    private var repoName: String = "Repo"
-    private var repoForks: Int = 0
+
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -29,10 +29,5 @@ class RepoInfoPresenter(
     fun backPressed(): Boolean {
         router.exit()
         return true
-    }
-
-    fun getArguments(args: Bundle?) {
-        repoName = args?.getString("repoName").toString()
-        repoForks= args?.getInt("repoForks")!!
     }
 }

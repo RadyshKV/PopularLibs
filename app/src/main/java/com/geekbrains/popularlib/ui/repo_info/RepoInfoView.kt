@@ -5,7 +5,7 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 
 interface RepoInfoView : MvpView {
     @AddToEndSingle
-    fun setRepoName(repoName : String)
+    fun setRepoName(repoName: String?)
 
     @AddToEndSingle
     fun setRepoForks(repoForks : Int)

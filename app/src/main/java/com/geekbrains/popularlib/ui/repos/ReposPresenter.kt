@@ -1,10 +1,10 @@
 package com.geekbrains.popularlib.ui.repos
 
-import android.os.Bundle
 import android.util.Log
 import com.geekbrains.popularlib.domain.GithubReposRepository
 import com.geekbrains.popularlib.model.GithubRepoModel
-import com.geekbrains.popularlib.screens.AppScreens
+import com.geekbrains.popularlib.model.GithubUserModel
+import com.geekbrains.popularlib.navigation.AppScreens
 import com.geekbrains.popularlib.ui.base.IListPresenter
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -12,12 +12,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 
 class ReposPresenter(
+    private val userModel: GithubUserModel,
     private val router: Router,
-    private val reposRepository: GithubReposRepository
+    private val reposRepository: GithubReposRepository,
 ) : MvpPresenter<ReposView>() {
 
     val reposListPresenter = ReposListPresenter()
-    private lateinit var reposUrl: String
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -34,7 +34,7 @@ class ReposPresenter(
 
     private fun loadData() {
 
-        reposRepository.getRepos(reposUrl)
+        reposRepository.getRepos(userModel)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { viewState.showLoading() }
@@ -64,11 +64,7 @@ class ReposPresenter(
     }
 
     fun backPressed(): Boolean {
-        //router.exit()
+        router.exit()
         return true
-    }
-
-    fun getArguments(args: Bundle?) {
-        reposUrl = args?.getString("reposUrl").toString()
     }
 }

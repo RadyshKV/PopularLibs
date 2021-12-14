@@ -15,7 +15,7 @@ class ReposAdapter (
     inner class RepoViewHolder(private val vb: ItemRepoBinding) : RecyclerView.ViewHolder(vb.root),
         RepoItemView {
         override fun setName(name: String) {
-            vb.name.text = name
+            vb.tvName.text = name
         }
 
         override var pos: Int = -1

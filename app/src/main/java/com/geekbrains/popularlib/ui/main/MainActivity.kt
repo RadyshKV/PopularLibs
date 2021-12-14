@@ -24,7 +24,7 @@ class MainActivity: MvpAppCompatActivity(R.layout.activity_main), MainView {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        //super.onBackPressed()
 
         supportFragmentManager.fragments.forEach{
             if (it is BackButtonListener && it.backPressed()){
