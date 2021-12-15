@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.popularlib.App
 import com.geekbrains.popularlib.databinding.FragmentUsersBinding
 import com.geekbrains.popularlib.db.AppDatabase
+import com.geekbrains.popularlib.db.cache.RoomGithubUsersCache
 import com.geekbrains.popularlib.domain.GithubUsersRepositoryImpl
 import com.geekbrains.popularlib.remote.ApiHolder
 import com.geekbrains.popularlib.remote.connectivity.NetworkStatus
@@ -28,7 +29,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
             GithubUsersRepositoryImpl(
                 status,
                 ApiHolder.retrofitService,
-                AppDatabase.instance
+                RoomGithubUsersCache(AppDatabase.instance)
             )
         )
     }

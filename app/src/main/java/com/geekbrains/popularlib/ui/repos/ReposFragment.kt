@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.popularlib.App
 import com.geekbrains.popularlib.databinding.FragmentReposBinding
 import com.geekbrains.popularlib.db.AppDatabase
+import com.geekbrains.popularlib.db.cache.RoomGithubRepositoriesCache
 import com.geekbrains.popularlib.domain.GithubReposRepositoryImpl
 import com.geekbrains.popularlib.model.GithubUserModel
 import com.geekbrains.popularlib.remote.ApiHolder
@@ -30,7 +31,7 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
             GithubReposRepositoryImpl(
                 status,
                 ApiHolder.retrofitService,
-                AppDatabase.instance
+                RoomGithubRepositoriesCache(AppDatabase.instance)
             )
         )
     }
