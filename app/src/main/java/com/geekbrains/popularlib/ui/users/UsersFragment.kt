@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.popularlib.App
 import com.geekbrains.popularlib.databinding.FragmentUsersBinding
 import com.geekbrains.popularlib.db.AppDatabase
+import com.geekbrains.popularlib.db.cache.RoomGithubUsersCache
 import com.geekbrains.popularlib.domain.GithubUsersRepositoryImpl
 import com.geekbrains.popularlib.remote.ApiHolder
 import com.geekbrains.popularlib.remote.connectivity.NetworkStatus
@@ -21,16 +22,8 @@ import moxy.ktx.moxyPresenter
 
 class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
-    private val status by lazy {NetworkStatus(requireContext().applicationContext)}
     private val presenter by moxyPresenter {
-        UsersPresenter(
-            App.instance.router,
-            GithubUsersRepositoryImpl(
-                status,
-                ApiHolder.retrofitService,
-                AppDatabase.instance
-            )
-        )
+        App.instance.appComponent.usersPresenter()
     }
     private var _binding: FragmentUsersBinding? = null
     private val binding

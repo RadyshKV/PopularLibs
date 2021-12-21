@@ -1,16 +1,17 @@
 package com.geekbrains.popularlib
 
 import android.app.Application
-import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Router
+import com.geekbrains.popularlib.di.components.AppComponent
+import com.geekbrains.popularlib.di.components.DaggerAppComponent
+import com.geekbrains.popularlib.di.modules.ContextModule
 
 class App: Application() {
-    private val cicerone: Cicerone<Router> by lazy { Cicerone.create() }
 
-    val navigationHolder
-        get() = cicerone.getNavigatorHolder()
-    val router
-        get() = cicerone.router
+    val appComponent: AppComponent by lazy {
+        DaggerAppComponent.builder()
+            .contextModule(ContextModule(this))
+            .build()
+    }
 
     override fun onCreate() {
         super.onCreate()

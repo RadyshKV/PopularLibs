@@ -9,11 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.popularlib.App
 import com.geekbrains.popularlib.databinding.FragmentReposBinding
-import com.geekbrains.popularlib.db.AppDatabase
-import com.geekbrains.popularlib.domain.GithubReposRepositoryImpl
 import com.geekbrains.popularlib.model.GithubUserModel
-import com.geekbrains.popularlib.remote.ApiHolder
-import com.geekbrains.popularlib.remote.connectivity.NetworkStatus
 import com.geekbrains.popularlib.ui.base.BackButtonListener
 import com.geekbrains.popularlib.ui.repos.adapter.ReposAdapter
 import moxy.MvpAppCompatFragment
@@ -21,18 +17,8 @@ import moxy.ktx.moxyPresenter
 
 class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
 
-    private val status by lazy { NetworkStatus(requireContext().applicationContext) }
-
     private val presenter by moxyPresenter {
-        ReposPresenter(
-            userModel,
-            App.instance.router,
-            GithubReposRepositoryImpl(
-                status,
-                ApiHolder.retrofitService,
-                AppDatabase.instance
-            )
-        )
+        App.instance.appComponent.reposPresenterFactory().presenter(userModel)
     }
     private var _binding: FragmentReposBinding? = null
     private val binding
