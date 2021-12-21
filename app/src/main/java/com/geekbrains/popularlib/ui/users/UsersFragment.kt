@@ -8,8 +8,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.popularlib.App
 import com.geekbrains.popularlib.databinding.FragmentUsersBinding
+import com.geekbrains.popularlib.db.AppDatabase
+import com.geekbrains.popularlib.db.cache.RoomGithubUsersCache
 import com.geekbrains.popularlib.domain.GithubUsersRepositoryImpl
 import com.geekbrains.popularlib.remote.ApiHolder
+import com.geekbrains.popularlib.remote.connectivity.NetworkStatus
 import com.geekbrains.popularlib.ui.base.BackButtonListener
 import com.geekbrains.popularlib.ui.imageloading.GlideImageLoader
 import com.geekbrains.popularlib.ui.users.adapter.UsersAdapter
@@ -20,10 +23,7 @@ import moxy.ktx.moxyPresenter
 class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     private val presenter by moxyPresenter {
-        UsersPresenter(
-            App.instance.router,
-            GithubUsersRepositoryImpl(ApiHolder.retrofitService)
-        )
+        App.instance.appComponent.usersPresenter()
     }
     private var _binding: FragmentUsersBinding? = null
     private val binding
