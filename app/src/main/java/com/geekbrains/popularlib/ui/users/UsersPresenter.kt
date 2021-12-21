@@ -9,10 +9,12 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class UsersPresenter(
+class UsersPresenter @Inject constructor(
     private val router: Router,
     private val usersRepository: GithubUsersRepository,
+    private val appScreens: AppScreens,
 ) : MvpPresenter<UsersView>() {
 
     val usersListPresenter = UsersListPresenter()
@@ -22,8 +24,8 @@ class UsersPresenter(
         loadData()
         usersListPresenter.itemClickListener = {
             router.navigateTo(
-                AppScreens.reposScreen(
-                   usersListPresenter.users.get(it.pos)
+                appScreens.reposScreen(
+                    usersListPresenter.users.get(it.pos)
                 )
             )
         }
