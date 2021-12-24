@@ -15,7 +15,8 @@ import moxy.ktx.moxyPresenter
 class RepoInfoFragment() : MvpAppCompatFragment(), RepoInfoView, BackButtonListener {
 
     private val presenter by moxyPresenter {
-        App.instance.appComponent.repoInfoPresenterFactory().presenter(repoModel)
+        App.instance.initRepoInfoSubcomponent()
+        App.instance.repoInfoSubcomponent?.repoInfoPresenterFactory()?.presenter(repoModel)!!
     }
     private var _binding: FragmentRepoInfoBinding? = null
     private val binding

@@ -4,8 +4,9 @@ import com.geekbrains.popularlib.db.AppDatabase
 import com.geekbrains.popularlib.db.model.RoomGithubUser
 import com.geekbrains.popularlib.model.GithubUserModel
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class RoomGithubUsersCache(
+class RoomGithubUsersCache @Inject constructor(
     private val db: AppDatabase
 ): IUsersCache {
 

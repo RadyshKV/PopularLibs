@@ -6,8 +6,9 @@ import com.geekbrains.popularlib.model.GithubRepoModel
 import com.geekbrains.popularlib.model.GithubRepoOwner
 import com.geekbrains.popularlib.model.GithubUserModel
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class RoomGithubRepositoriesCache(
+class RoomGithubRepositoriesCache @Inject constructor(
     private val db: AppDatabase
 ) : IRepositoriesCache {
 
