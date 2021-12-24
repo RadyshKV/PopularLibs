@@ -1,6 +1,7 @@
 package com.geekbrains.popularlib.navigation
 
 import androidx.core.os.bundleOf
+import com.geekbrains.popularlib.model.GithubRepoModel
 import com.geekbrains.popularlib.model.GithubUserModel
 import com.geekbrains.popularlib.ui.repo_info.RepoInfoFragment
 import com.geekbrains.popularlib.ui.repos.ReposFragment
@@ -11,7 +12,7 @@ interface AppScreens{
 
     fun reposScreen(userModel: GithubUserModel): FragmentScreen
 
-    fun repoInfoScreen(repoName: String, repoForks: Int): FragmentScreen
+    fun repoInfoScreen(repoModel: GithubRepoModel): FragmentScreen
 }
 
 
@@ -24,7 +25,7 @@ class AppScreensImpl: AppScreens {
         ReposFragment.newInstance(userModel)
     }
 
-    override fun repoInfoScreen(repoName: String, repoForks: Int) = FragmentScreen {
-        RepoInfoFragment.newInstance(repoName, repoForks)
+    override fun repoInfoScreen(repoModel: GithubRepoModel) = FragmentScreen {
+        RepoInfoFragment.newInstance(repoModel)
     }
 }

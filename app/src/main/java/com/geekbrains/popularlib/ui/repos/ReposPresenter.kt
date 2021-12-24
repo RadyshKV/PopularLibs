@@ -30,8 +30,7 @@ class ReposPresenter @AssistedInject constructor(
         reposListPresenter.itemClickListener = {
             router.navigateTo(
                 appScreens.repoInfoScreen(
-                    reposListPresenter.repos.get(it.pos).name,
-                    reposListPresenter.repos.get(it.pos).forksCount
+                    reposListPresenter.repos.get(it.pos)
                 )
             )
         }
