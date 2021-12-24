@@ -1,19 +1,23 @@
 package com.geekbrains.popularlib.ui.repo_info
 
+import com.geekbrains.popularlib.di.scope.containers.RepoInfoScopeContainer
 import com.geekbrains.popularlib.model.GithubRepoModel
 import com.github.terrakok.cicerone.Router
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import moxy.MvpPresenter
-import java.io.Serializable
 
 class RepoInfoPresenter @AssistedInject constructor(
     @Assisted private val repoModel: GithubRepoModel,
+    private val repoInfoScopeContainer: RepoInfoScopeContainer,
     private val router: Router,
 ) : MvpPresenter<RepoInfoView>() {
 
-
+    override fun onDestroy() {
+        repoInfoScopeContainer.destroyRepoInfoSubcomponent()
+        super.onDestroy()
+    }
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

@@ -1,6 +1,7 @@
 package com.geekbrains.popularlib.ui.repos
 
 import android.util.Log
+import com.geekbrains.popularlib.di.scope.containers.RepoScopeContainer
 import com.geekbrains.popularlib.domain.GithubReposRepository
 import com.geekbrains.popularlib.model.GithubRepoModel
 import com.geekbrains.popularlib.model.GithubUserModel
@@ -13,11 +14,11 @@ import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
-import javax.inject.Inject
 
 class ReposPresenter @AssistedInject constructor(
     private val router: Router,
     private val reposRepository: GithubReposRepository,
+    private val repoScopeContainer: RepoScopeContainer,
     private val appScreens: AppScreens,
     @Assisted private val userModel: GithubUserModel
 ) : MvpPresenter<ReposView>() {
@@ -34,6 +35,11 @@ class ReposPresenter @AssistedInject constructor(
                 )
             )
         }
+    }
+
+    override fun onDestroy() {
+        repoScopeContainer.destroyRepoSubcomponent()
+        super.onDestroy()
     }
 
     private fun loadData() {

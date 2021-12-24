@@ -1,6 +1,7 @@
 package com.geekbrains.popularlib.ui.users
 
 import android.util.Log
+import com.geekbrains.popularlib.di.scope.containers.UsersScopeContainer
 import com.geekbrains.popularlib.domain.GithubUsersRepository
 import com.geekbrains.popularlib.model.GithubUserModel
 import com.geekbrains.popularlib.navigation.AppScreens
@@ -14,6 +15,7 @@ import javax.inject.Inject
 class UsersPresenter @Inject constructor(
     private val router: Router,
     private val usersRepository: GithubUsersRepository,
+    private val usersScopeContainer: UsersScopeContainer,
     private val appScreens: AppScreens,
 ) : MvpPresenter<UsersView>() {
 
@@ -29,6 +31,11 @@ class UsersPresenter @Inject constructor(
                 )
             )
         }
+    }
+
+    override fun onDestroy() {
+        usersScopeContainer.destroyUsersSubcomponent()
+        super.onDestroy()
     }
 
     private fun loadData() {

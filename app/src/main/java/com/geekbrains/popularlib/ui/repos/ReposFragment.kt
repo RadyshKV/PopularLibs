@@ -18,7 +18,8 @@ import moxy.ktx.moxyPresenter
 class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
 
     private val presenter by moxyPresenter {
-        App.instance.appComponent.reposPresenterFactory().presenter(userModel)
+        App.instance.initRepoSubcomponent()
+        App.instance.repoSubcomponent?.reposPresenterFactory()?.presenter(userModel)!!
     }
     private var _binding: FragmentReposBinding? = null
     private val binding
